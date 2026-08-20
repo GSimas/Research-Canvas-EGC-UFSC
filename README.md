@@ -38,6 +38,7 @@ Abra o endereço informado pelo Vite no terminal. O projeto demonstrativo é cri
 
 ```bash
 npm run build
+npm run verify:hostinger
 ```
 
 Validações adicionais:

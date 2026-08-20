@@ -75,7 +75,7 @@ A Hostinger permite aplicações Node.js em planos compatíveis, normalmente Bus
 1. Em hPanel, acesse **Websites → Add Website → Deploy Web App/Node.js Web App**.
 2. Escolha GitHub para deploy contínuo ou faça upload deste ZIP.
 3. Selecione Node.js 22.
-4. Configure a instalação e o build.
+4. Configure o build.
 5. Após o deploy no domínio temporário, escolha **Connect domain** e informe `researchcanvas.gustavosimas.com`.
 6. Confirme os registros DNS solicitados; a Hostinger instala o SSL automaticamente.
 
@@ -84,17 +84,28 @@ A Hostinger permite aplicações Node.js em planos compatíveis, normalmente Bus
 Para este pacote, escolha o framework **Other/Outro** quando o Vinext não for detectado corretamente e preencha:
 
 - **Node.js:** 22;
-- **comando de instalação:** `npm ci`;
-- **comando de build:** `npm run build:hostinger`;
+- **preset:** `Other/Outro`;
+- **branch:** `main`;
+- **diretório raiz:** `./`;
+- **gerenciador de pacotes:** `npm`;
+- **comando de build:** `npm run build`;
 - **diretório de saída:** `dist/standalone`;
 - **arquivo de entrada:** `server.js`;
 - **comando de inicialização**, se o painel solicitar: `npm run start:hostinger`.
+
+O hPanel instala as dependências automaticamente. O arquivo `.npmrc` mantém
+as dependências de desenvolvimento disponíveis porque Vinext, Vite e seus
+plugins são necessários durante o build. Não configure manualmente
+`NODE_ENV=production` para a etapa de instalação/build.
 
 O servidor standalone utiliza automaticamente a variável `PORT` fornecida pela Hostinger e escuta em `0.0.0.0`.
 
 ### Observação importante sobre a Hostinger
 
-O pacote agora possui duas saídas separadas: o build padrão para Cloudflare e `npm run build:hostinger` para gerar o servidor Node standalone em `dist/standalone`. Não use `dist`, `.next` ou `dist/client` como diretório de saída no hPanel.
+O comando `npm run build` gera o servidor Node standalone em
+`dist/standalone`. A verificação local adicional pode ser executada com
+`npm run verify:hostinger`. Não use `dist`, `.next` ou `dist/client` como
+diretório de saída no hPanel.
 
 Se a prioridade é concentrar hospedagem e DNS na Hostinger, use os campos acima. O build standalone foi preparado especificamente para esse fluxo.
 

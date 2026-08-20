@@ -8,8 +8,9 @@
   "scripts": {
     "install:ci": "bash scripts/install-ci.sh",
     "dev": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vite",
-    "build": "HOSTINGER_BUILD=1 vinext build && test -f dist/standalone/server.js",
-    "build:hostinger": "HOSTINGER_BUILD=1 vinext build && test -f dist/standalone/server.js",
+    "build": "HOSTINGER_BUILD=1 vinext build",
+    "build:hostinger": "npm run build && npm run verify:hostinger",
+    "verify:hostinger": "test -f dist/standalone/server.js && test -d dist/standalone/dist/client && test -d dist/standalone/dist/server",
     "start": "node dist/standalone/server.js",
     "start:hostinger": "node dist/standalone/server.js",
     "preview:cloudflare": "npm run build && wrangler dev",
