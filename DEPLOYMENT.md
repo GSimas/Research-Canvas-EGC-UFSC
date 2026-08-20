@@ -79,11 +79,24 @@ A Hostinger permite aplicações Node.js em planos compatíveis, normalmente Bus
 5. Após o deploy no domínio temporário, escolha **Connect domain** e informe `researchcanvas.gustavosimas.com`.
 6. Confirme os registros DNS solicitados; a Hostinger instala o SSL automaticamente.
 
+### Configuração exata no hPanel
+
+Para este pacote, escolha o framework **Other/Outro** quando o Vinext não for detectado corretamente e preencha:
+
+- **Node.js:** 22;
+- **comando de instalação:** `npm ci`;
+- **comando de build:** `npm run build:hostinger`;
+- **diretório de saída:** `dist/standalone`;
+- **arquivo de entrada:** `server.js`;
+- **comando de inicialização**, se o painel solicitar: `npm run start:hostinger`.
+
+O servidor standalone utiliza automaticamente a variável `PORT` fornecida pela Hostinger e escuta em `0.0.0.0`.
+
 ### Observação importante sobre a Hostinger
 
-Esta versão está configurada para o runtime Cloudflare Workers. A Hostinger executa um servidor Node tradicional. Portanto, o ZIP não deve ser tratado como um deploy Node garantidamente direto na Hostinger: antes, é recomendável criar uma variante de build `standalone`/Nitro, validar porta e comando de inicialização e testar todas as exportações no runtime Node.
+O pacote agora possui duas saídas separadas: o build padrão para Cloudflare e `npm run build:hostinger` para gerar o servidor Node standalone em `dist/standalone`. Não use `dist`, `.next` ou `dist/client` como diretório de saída no hPanel.
 
-Se a prioridade é publicar agora com o mínimo de risco, use Cloudflare Workers. Se a prioridade é concentrar hospedagem e DNS na Hostinger, faça primeiro essa pequena adaptação de runtime e então use o fluxo de Web App da Hostinger.
+Se a prioridade é concentrar hospedagem e DNS na Hostinger, use os campos acima. O build standalone foi preparado especificamente para esse fluxo.
 
 ## Persistência e privacidade
 
